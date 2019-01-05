@@ -2,22 +2,32 @@ from Crypto.Cipher import AES
 from Crypto import Random
 import hashlib
 import re
+import argparse
+
+parser = argparse.ArgumentParser(description="")
+parser.add_argument('-p', '--password', type=str, required=True)
+parser.add_argument('-t','--text',type=str, required=True)
+parser.add_argument('-f','--path',type=str, required=True)
+args = parser.parse_args()
 
 p = re.compile("\\\\")
 
 password = b'hello'
-key = hashlib.sha256(password).digest()
-pass2 = Random.new() 
-
-iv = Random.new().read(AES.block_size)
-encryptor = AES.new(key, AES.MODE_CFB, iv)
 text = b'wow'
-msg = encryptor.encrypt(text)
-print(msg)
-print(iv)
 
-decryptor = AES.new(key, AES.MODE_CFB, iv)
-plain = decryptor.decrypt(msg)
+def setup(password, text):
+    key = hashlib.sha256(password).digest()
+
+    iv = Random.new().read(AES.block_size)
+    encryptor = AES.new(key, AES.MODE_CFB, iv)
+    msg = encryptor.encrypt(text)
+    print(msg)
+    print(iv)
+
+    decryptor = AES.new(key, AES.MODE_CFB, iv)
+    plain = decryptor.decrypt(msg)
+
+    return msg,iv
 
 
 def remove_first_element(arr):
@@ -72,23 +82,24 @@ def get_pixel_arr(arr):
     pixel_list = list()
     for i in arr:
         for counter, j in enumerate(i):
-            pixel_list.append(int((j/128)*255))
+            pixel_list.append(str(int((j/128)*255)))
         pixel_list.append(0)
-    return pixel_list
+    return str(pixel_list)
 
 def write_ascii_file(arr, file_name):
-    get_pixel_arr(get_ascii_arr(arr))
+    pixel_arr = get_pixel_arr(get_ascii_arr(arr))
+    with open(file_name, "w+") as new_file:
+	for p in pixel_arr:
+	    new_file.write(p)
+
+def write_files(msg,iv,path):
+    setup(password,text)
     iv_arr, msg_arr = split_into_arr(iv,msg)
-    with open(file_path, "w+") as new_file:
-        new_file.writelines(arr)
-
-def write_files()
-    iv_arr, msg_arr = split_int_arr(iv,msg)
     write_ascii_file(iv_arr,"iv.csv")
-    write_ascii_file(msg_arr, "msg_arr")
+    write_ascii_file(msg_arr,"msg.csv")
 
-        
-
+msg, iv = setup(args.password.encode('utf-8'), args.text)
+write_files(msg,iv,args.path)
 
 
 
