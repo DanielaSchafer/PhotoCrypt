@@ -82,15 +82,44 @@ def get_pixel_arr(arr):
     pixel_list = list()
     for i in arr:
         for counter, j in enumerate(i):
-            pixel_list.append(str(int((j/128)*255)))
+            pixel_list.append((int((j/128)*255)))
         pixel_list.append(0)
-    return str(pixel_list)
+    return (pixel_list)
 
 def write_ascii_file(arr, file_name):
     pixel_arr = get_pixel_arr(get_ascii_arr(arr))
+    print(pixel_arr)
+    pixels = split_into_pixels(pixel_arr)
+    print(pixels)
     with open(file_name, "w+") as new_file:
-	for p in pixel_arr:
-	    new_file.write(p)
+        for p in pixels:
+            new_file.write("%s\n" % p)
+
+def split_into_pixels(pixel_vals):
+    while(len(pixel_vals)%3 != 0):
+        pixel_vals.append(0)
+
+    pixel_count = len(pixel_vals)/3
+
+    pixels = []
+    for i in range(int(pixel_count)):
+        pixels.append(list())
+    
+    index = 0 
+
+    for counter, p in enumerate(pixel_vals):
+        print(index)
+        if counter%3 == 0 and index<pixel_count-1 and counter != 0:
+           index = index+1
+           pixels[index] = list()
+           pixels[index].append(str(p))
+        else:
+            pixels[index].append(str(p))
+    print(pixels)
+    return pixels
+        
+
+
 
 def write_files(msg,iv,path):
     setup(password,text)
