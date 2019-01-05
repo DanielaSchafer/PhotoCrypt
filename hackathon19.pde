@@ -1,7 +1,7 @@
 String[] OGdata = loadStrings("fileName.csv");
 String[] OGotherStuff = loadStrings("fileName2.csv");
-Integer[] data = (Integer)String[]; //honestly idk how to cast
-Integer[] otherStuff = (Integer)String[];
+int[] data = int[OGdata.length]; //honestly idk how to cast
+int[] otherStuff = int[OGotherStuff.length];
 color [] img = new color [(1.5*data.length)+otherStuff.length+5];
 int rows = (data.length/data.length)+1;
 int columns = rows+1;
@@ -14,6 +14,14 @@ void setup()
   {
    img = color  
   }
+}
+
+void getPixelValues(arr, newArr)
+{
+	for(int i = 0; i<arr.length;i++){
+		newArr[i] = int(arr[i])
+	}
+	print(newArr)
 }
 
 void draw()
