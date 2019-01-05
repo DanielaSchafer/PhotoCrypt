@@ -1,58 +1,64 @@
-import java.util.*
+//import java.util.*
 
 String[] msg;
 String[] iv;
 PImage img;
+int[][] iv2;
+int[][] msg2;
 
-void setup(){
-		msg = loadStrings("msg.txt");
-		iv = loadStrings("iv.txt");
-    PImage img = createImage(100,100,RGB);
-    img.loadPixels();
-    generateImage(iv,msg);
+void setup()
+{
+  size(500, 500);
+  msg = loadStrings("test1.txt");
+  iv = loadStrings("test2.txt");
+  PImage img = createImage(100, 100, RGB);
+  img.loadPixels();
+  iv2 = getPixelArr(iv);
+  msg2 = getPixelArr(msg);
+  generateImage(iv2, msg2);
 }
 
 private static String removeLastChar(String str) {
-    return str.substring(0, str.length() - 1);
+  return str.substring(0, str.length() - 1);
 }
 private static String removeFirstChar(String str) {
-    return str.substring(1, str.length());
+  return str.substring(1, str.length());
 }
 
-public static String[][] getPixelArr(String[] arr) {
-    int[][] pixelsList = new int[arr.length][3];
-    for(int i = 0; i<arr.length; i++){
-      arr[i] = removeLastChar(arr[i]);
-      arr[i] = removeFirstChar(arr[i]);
-      List<String> vals = Arrays.asList(arr[i].split(","));
-      pixelsList[i] = convertToArr(vals); 
-    }
-    return pixelsList;
+public static int[][] getPixelArr(String[] arr) {
+  int[][] pixelsList = new int[arr.length][3];
+  for (int i = 0; i<arr.length; i++) {
+    arr[i] = removeLastChar(arr[i]);
+    arr[i] = removeFirstChar(arr[i]);
+    String[] vals = arr[i].split(",");
+    pixelsList[i] = convertToArr(vals);
+  }
+  return pixelsList;
 }
 
-public void generateImage(String[][] iv, String[][] msg){
-    drawPixels(iv,0);
-    int[][] zeros = {{0,0,0},{0,0,0},{0,0,0}};
-    drawPixels(zeros,iv.length);
-    drawPixels(msg,iv.length+zeros.length);
-    Image(img,0,0);
+public void generateImage(int[][] iv, int[][] msg) {
+  drawPixels(iv, 0);
+  int[][] zeros = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
+  drawPixels(zeros, iv.length);
+  drawPixels(msg, iv.length+zeros.length);
+  image(img, 0, 0);
 }
 
-public void drawPixels(String[][] pixels, int start){
-  for(int i = 0; i<pixelsList[0].length; i++){
-    img.pixels[i] = color(pixelsList[i][0],pixelsList[i][1],pixelsList[i][2]);
+public void drawPixels(int[][] pixelsList, int start) {
+  for (int i = start; i<pixelsList[0].length; i++) {
+    img.pixels[i] = color(pixelsList[i][0], pixelsList[i][1], pixelsList[i][2]);
   }
   img.updatePixels();
 }
 
-public String[] convertToArr(ArrayList<String> list){
-  String[] newArr = new String[list.size()];
-  for(int i = 0; i<list.size(); i++)
+public static int[] convertToArr(String[] list) {
+  int[] newArr = new int[list.length];
+  for (int i = 0; i<list.length; i++)
   {
-    newArr[i] = list.get(i);
+    newArr[i] = int(list[i]);
   }
   return newArr;
 }
 
-void draw(){
+void draw() {
 }
