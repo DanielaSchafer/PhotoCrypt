@@ -10,8 +10,8 @@ void setup()
 {
   size(150, 150);
   background(255);
-  msg = loadStrings("msg.txt");
-  iv = loadStrings("test2.txt");
+  msg = loadStrings("msg (2).txt");
+  iv = loadStrings("iv.txt");
   PImage img = createImage(100, 100, RGB);
   img.loadPixels();
   iv2 = getPixelArr(iv);
