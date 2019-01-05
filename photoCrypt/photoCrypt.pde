@@ -10,8 +10,8 @@ void setup()
 {
   size(500, 500);
   background(255);
-  msg = loadStrings("iv.txt");
-  iv = loadStrings("msg.txt");
+  msg = loadStrings("test1.txt");
+  iv = loadStrings("test2.txt");
   PImage img = createImage(100, 100, RGB);
   img.loadPixels();
   iv2 = getPixelArr(iv);
@@ -54,7 +54,7 @@ public void generateImage(int[][] iv, int[][] msg) {
 public void drawPixels(int[][] pixelsList, int start) {
   print(pixelsList[2][0]);
   for (int i = start; i<start+pixelsList[0].length; i++) {
-    img.pixels[i] = color(pixelsList[i][0], pixelsList[i][1], pixelsList[i][2]);
+    set(pixelsList[i][0], pixelsList[i][1], pixelsList[i][2]);
   }
   img.updatePixels();
 }
