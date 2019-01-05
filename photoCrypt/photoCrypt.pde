@@ -8,10 +8,10 @@ int[][] msg2;
 
 void setup()
 {
-  size(500, 500);
+  size(150, 150);
   background(255);
   msg = loadStrings("msg.txt");
-  iv = loadStrings("iv.txt");
+  iv = loadStrings("test2.txt");
   PImage img = createImage(100, 100, RGB);
   img.loadPixels();
   iv2 = getPixelArr(iv);
@@ -48,7 +48,7 @@ public void generateImage(int[][] iv, int[][] msg) {
   int[][] zeros = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
   drawPixels(zeros, iv.length);
   drawPixels(msg, iv.length+zeros.length);
-  image(img, 0, 0);
+  //image(img, 0, 0);
 }
 
 public void drawPixels(int[][] pixelsList, int start) {
@@ -59,6 +59,11 @@ public void drawPixels(int[][] pixelsList, int start) {
     pixels[i] = color(pixelsList[counter][0], pixelsList[counter][1], pixelsList[counter][2]);
     counter++;
   }
+  for (int i = start+pixelsList[0].length-1; i<width*height; i++)
+  {
+    pixels[i] = color(0, random(0, 255), random(0, 255));
+  }
+  updatePixels();
 }
 
 public static int[] convertToArr(String[] list) {
